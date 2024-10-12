@@ -33,6 +33,17 @@ public class UserService {
     }
 
     @Transactional
+    public User update(User obj) {
+        User existingUser = findById(obj.getId());
+        updateData(existingUser, obj);
+        return this.userRepository.save(existingUser);
+    }
+
+    private void updateData(User existingUser, User obj) {
+        existingUser.setName(obj.getName());
+    }
+
+    @Transactional
     public void delete(Long id) {
         findById(id); // Verifica se o usuário existe
         try {

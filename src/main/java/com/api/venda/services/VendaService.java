@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import com.api.venda.repositories.ProdutoRepository;
 import com.api.venda.repositories.UserRepository;
 import com.api.venda.repositories.VendaRepository;
@@ -22,6 +24,17 @@ public class VendaService {
 
     @Autowired
     private UserRepository userRepository;  // Adicionar o UserRepository para carregar o usuário
+
+    // Método para buscar todas as vendas
+    public List<Venda> getAllVendas() {
+        return vendaRepository.findAll();
+    }
+
+    // Método para buscar uma venda específica por ID
+    public Venda getVendaById(Long id) throws Exception {
+        return vendaRepository.findById(id)
+                .orElseThrow(() -> new Exception("Venda não encontrada"));
+    }
 
     @Transactional
     public Venda createVenda(Long userId, Long produtoId, int quantity) throws Exception {
