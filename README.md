@@ -109,7 +109,7 @@ As principais dependências utilizadas neste projeto incluem:
 
 Contribuições são bem-vindas! Caso tenha sugestões de melhorias ou correções, sinta-se à vontade para abrir uma issue ou enviar um pull request.
 
-# Integrantes do Grupo:
+## Integrantes do Grupo:
 
 - **Gustavo Luiz da Silva**  
   RA: 2301710
