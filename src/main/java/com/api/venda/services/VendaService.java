@@ -31,16 +31,15 @@ public class VendaService {
     }
 
     // Método para buscar uma venda específica por ID
-    public Venda getVendaById(Long id) throws Exception {
+    public Venda getVendaById(Long id) {
         return vendaRepository.findById(id)
-                .orElseThrow(() -> new Exception("Venda não encontrada"));
+                .orElseThrow(() -> new RuntimeException("Venda não encontrada"));
     }
-
     @Transactional
     public Venda createVenda(Long userId, Long produtoId, int quantity) throws Exception {
         // Verifica se o produto existe
         Produto produto = produtoRepository.findById(produtoId)
-                .orElseThrow(() -> new Exception("Produto não encontrado"));
+                .orElseThrow(() -> new Exception("Venda não encontrada"));
         
         // Verifica se há estoque suficiente
         if (produto.getQuantidade() < quantity) {
@@ -64,5 +63,15 @@ public class VendaService {
 
         // Salva a venda
         return vendaRepository.save(venda);
+    }
+
+    @Transactional
+    public void delete(Long id) {
+        getVendaById(id); 
+        try {
+            this.vendaRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new RuntimeException("Não é possível excluir pois há entidades relacionadas!", e);
+        }
     }
 }

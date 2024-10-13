@@ -49,4 +49,10 @@ public class VendaController {
             throw new RuntimeException("Erro ao criar venda: " + e.getMessage());
         }
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        this.vendaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
