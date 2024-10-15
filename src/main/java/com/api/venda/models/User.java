@@ -22,4 +22,16 @@ public class User {
     @Column(name = "name", length = 100, nullable = false)
     private String name;
 
+    @Column(name = "email", length = 100, nullable = false)
+    private String email;
+
+    @Column(name = "password", length = 100, nullable = false)
+    private String password;
+
+    @Column(name = "is_active")
+    private Boolean isActive;
+
+    @Column(name = "cpf_cnpj", length = 100, nullable = false)
+    private String cpfCnpj;
+
 }

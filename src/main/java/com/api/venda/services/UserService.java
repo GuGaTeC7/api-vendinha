@@ -52,4 +52,11 @@ public class UserService {
             throw new RuntimeException("Não é possível excluir pois há entidades relacionadas!", e);
         }
     }
+
+    @Transactional
+    public User updateStatus(Long id, Boolean IsActive) {
+        User user = findById(id);
+        user.setIsActive(IsActive);
+        return userRepository.save(user);
+    }
 }
