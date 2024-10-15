@@ -34,3 +34,4 @@ build/
 
 ### Config banco ###
 src\main\resources\application.properties
+src/main/resources/application.properties
