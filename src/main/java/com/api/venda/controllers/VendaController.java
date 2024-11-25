@@ -20,7 +20,6 @@ public class VendaController {
     @Autowired
     private VendaService vendaService;
 
-
     // Endpoint para buscar todas as vendas
     @GetMapping
     public ResponseEntity<List<Venda>> getAllVendas() {
@@ -44,7 +43,8 @@ public class VendaController {
     public Venda createVenda(@RequestBody VendaRequest vendaRequest) {
         try {
             // Passe os dados da requisição para o serviço de vendas
-            return vendaService.createVenda(vendaRequest.getUserId(), vendaRequest.getProdutoId(), vendaRequest.getQuantity());
+            return vendaService.createVenda(vendaRequest.getUserId(), vendaRequest.getProdutoId(),
+                    vendaRequest.getQuantity(), vendaRequest.getIsActive());
         } catch (Exception e) {
             throw new RuntimeException("Erro ao criar venda: " + e.getMessage());
         }

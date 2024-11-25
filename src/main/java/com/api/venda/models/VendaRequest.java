@@ -4,6 +4,7 @@ public class VendaRequest {
     private Long userId;
     private Long produtoId;
     private int quantity;
+    private Boolean isActive;
 
     // Getters e Setters
     public Long getUserId() {
@@ -29,5 +30,12 @@ public class VendaRequest {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-}
 
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(boolean isActive) {
+        this.isActive = isActive;
+    }
+}

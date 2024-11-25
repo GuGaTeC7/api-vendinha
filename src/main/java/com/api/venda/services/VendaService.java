@@ -23,7 +23,7 @@ public class VendaService {
     private VendaRepository vendaRepository;
 
     @Autowired
-    private UserRepository userRepository;  // Adicionar o UserRepository para carregar o usuário
+    private UserRepository userRepository; // Adicionar o UserRepository para carregar o usuário
 
     // Método para buscar todas as vendas
     public List<Venda> getAllVendas() {
@@ -35,12 +35,13 @@ public class VendaService {
         return vendaRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Venda não encontrada"));
     }
+
     @Transactional
-    public Venda createVenda(Long userId, Long produtoId, int quantity) throws Exception {
+    public Venda createVenda(Long userId, Long produtoId, int quantity, boolean isActive) throws Exception {
         // Verifica se o produto existe
         Produto produto = produtoRepository.findById(produtoId)
                 .orElseThrow(() -> new Exception("Venda não encontrada"));
-        
+
         // Verifica se há estoque suficiente
         if (produto.getQuantidade() < quantity) {
             throw new Exception("Quantidade insuficiente em estoque");
@@ -52,10 +53,11 @@ public class VendaService {
 
         // Cria a venda
         Venda venda = new Venda();
-        venda.setUser(user);  // Agora o usuário existente é atribuído corretamente
+        venda.setUser(user); // Agora o usuário existente é atribuído corretamente
         venda.setProduto(produto);
         venda.setQuantity(quantity);
         venda.setPrice(produto.getPreco() * quantity);
+        venda.setIsActive(isActive);
 
         // Atualiza o estoque
         produto.setQuantidade(produto.getQuantidade() - quantity);
@@ -67,11 +69,18 @@ public class VendaService {
 
     @Transactional
     public void delete(Long id) {
-        getVendaById(id); 
+        getVendaById(id);
         try {
             this.vendaRepository.deleteById(id);
         } catch (Exception e) {
             throw new RuntimeException("Não é possível excluir pois há entidades relacionadas!", e);
         }
+    }
+
+    @Transactional
+    public Venda updateStatus(Long id, Boolean IsActive) {
+        Venda venda = getVendaById(id);
+        venda.setIsActive(IsActive);
+        return vendaRepository.save(venda);
     }
 }
